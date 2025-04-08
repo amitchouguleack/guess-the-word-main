@@ -82,16 +82,37 @@ const updateWordInProgress = function (guessedLetters) {
         } else {
             revealWord.push('●');
         }
-    }
+    } 
     wordInProgress.innerText = revealWord.join('');
     checkIfWin();
+    
 };
 
+const updateGuessesRemaining = function (guess) {
+
+    const upperWord = word.toUpperCase();
+    if (!upperWord.includes(guess)) {
+        message.innerText = `Sorry, the word has no ${guess}.`;
+        remainingGuesses -= 1;
+    } else {
+        message.innerText = `Good guess! The word has ${guess}.`;
+    }
+    if (remainingGuesses === 0) {
+        message.innerHTML = `Game over! The word was <span class="highlight">${word}</span>.`;
+        startOver();
+    } else if (remainingGuesses === 1) {
+        remainingGuessesElement.innerText = `${remainingGuesses} guess`;
+    } else {
+        remainingGuessesElement.innerText = `${remainingGuesses} guesses`;
+    }
+};
 const checkIfWin = function () {
     if (word.toUpperCase() === wordInProgress.innerText) {
         message.classList.add('win');
-        message.innerHTML = `<p class="highlight">Congratulations! You guessed the word!</p>`;
+        message.innerHTML = `<p class="highlight">You guessed the word! Congrats!</p>`; 
         startOver();
     }
 };
+
+
 
